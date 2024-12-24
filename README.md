@@ -1,50 +1,43 @@
-# React + TypeScript + Vite
+# 🧑‍💻 Pokedex App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and sleek Pokedex built using **React**, **TypeScript**, and **Vite**. This app allows you to explore Pokémon, view their stats, and build your own custom team.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Features
 
-## Expanding the ESLint configuration
+- 🐾 **Search Pokémon:** Quickly find details about your favorite Pokémon.
+- 📊 **View Stats:** Access detailed stats and abilities.
+- 🧰 **Team Builder:** Create and manage custom Pokémon teams.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Tech Stack
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Frontend:** React, TypeScript
+- **Styling:** Tailwind CSS
+- **Backend API:** [PokéAPI](https://pokeapi.co/)
+- **Build Tool:** Vite
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 🛠️ Installation & Setup
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/alvinnm/pokedex-app.git
+   cd pokedex-app
+   ```
+2. Install dependencies:
+  ```bash
+  npm install
+  ```
+3. Create a .env file in the root directory:
+  ```bash
+  VITE_API_URL=http://localhost:3000
+  VITE_POKEMON_API=https://pokeapi.co/api/v2
+  ```
+4. Start the development server and open your browser at http://localhost:5173:
+  ```bash
+  npm run dev
+  ```
