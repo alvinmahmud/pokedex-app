@@ -18,10 +18,10 @@ A modern and sleek Pokedex built using **React**, **TypeScript**, and **Vite**. 
 ## 🛠️ Installation & Setup
 
 1. Clone the repository:
-   ```bash
+  ```bash
   git clone https://github.com/alvinnm/pokedex-app.git
   cd pokedex-app
-   ```
+  ```
 2. Install dependencies:
   ```bash
   npm install
