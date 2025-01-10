@@ -5,9 +5,5 @@ export interface Pokemon {
     frontSprite: string;
     officialArtwork: string;
   };
-  types: {
-    type: {
-      name: string;
-    };
-  }[];
+  types: string[];
 }

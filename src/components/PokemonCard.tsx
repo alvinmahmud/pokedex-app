@@ -10,11 +10,11 @@ const PokemonCard = () => {
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
-        const data = await getPokemonByName("pikachu");
+        const data = await getPokemonByName("charizard");
         setPokemon(data);
       } catch (err) {
-        setError("Failed to fetch Pokémon data.");
-        console.error(err); // Logging errors
+        setError("Failed to get Pokémon data.");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -32,28 +32,41 @@ const PokemonCard = () => {
   }
 
   if (!pokemon) {
-    return <div className="text-center text-blue-500">No Pokemon found</div>;
+    return (
+      <div className="text-center text-gray-500">
+        No Pokémon data available.
+      </div>
+    );
   }
 
+  console.log("Current Pokémon state:", pokemon);
+
   return (
-    <div className="max-w-sm mx-auto p-4 border rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300">
+    <div className="max-w-sm mx-auto p-4 border rounded-lg shadow-md bg-white">
       <img
-        src={pokemon.sprites.frontSprite}
-        alt={pokemon.name}
+        src={pokemon.sprites?.officialArtwork || ""}
+        alt={pokemon.name || "???"}
         className="w-32 h-32 mx-auto"
       />
       <h1 className="text-xl font-bold text-center capitalize">
-        {pokemon.name}
+        {pokemon.name || "???"}
       </h1>
       <div className="flex justify-center gap-2 mt-2">
-        {pokemon.types.map((type) => (
-          <span
-            key={type.type.name}
-            className="px-3 py-1 bg-gray-200 rounded-full text-sm capitalize"
-          >
-            {type.type.name}
-          </span>
-        ))}
+        {pokemon.types?.map((type, index) => {
+          const typeName = type || "unknown";
+          const typeImagePath = `/images/types/${typeName}.png`;
+
+          return (
+            <span key={index} className="flex items-center gap-1">
+              <img
+                src={typeImagePath}
+                alt={typeName}
+                className="w-12 h-4 object-contain"
+                style={{ height: "75px", width: "75px" }}
+              />
+            </span>
+          );
+        })}
       </div>
     </div>
   );
