@@ -4,16 +4,22 @@ import { Pokemon } from "@/types/pokemon";
 
 const PokemonCard = () => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pokemonName, setPokemonName] = useState<string | null>(null);
+  const [input, setInput] = useState("");
 
   useEffect(() => {
     const fetchPokemon = async () => {
+      if (!pokemonName) return;
       try {
-        const data = await getPokemonByName("charizard");
+        setLoading(true);
+        const data = await getPokemonByName(pokemonName);
         setPokemon(data);
+        setError(null);
       } catch (err) {
-        setError("Failed to get Pokémon data.");
+        setPokemon(null);
+        setError("Invalid Pokémon name. Showing unknown Pokémon.");
         console.error(err);
       } finally {
         setLoading(false);
@@ -21,53 +27,94 @@ const PokemonCard = () => {
     };
 
     fetchPokemon();
-  }, []);
+  }, [pokemonName]);
 
-  if (loading) {
-    return <div className="text-center text-gray-500">Loading...</div>;
-  }
+  console.log(pokemon)
 
-  if (error) {
-    return <div className="text-center text-red-500">{error}</div>;
-  }
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+  };
 
-  if (!pokemon) {
-    return (
-      <div className="text-center text-gray-500">
-        No Pokémon data available.
-      </div>
-    );
-  }
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setPokemonName(input.trim().toLowerCase() || null);
+  };
 
-  console.log("Current Pokémon state:", pokemon);
+  const types = pokemon?.types?.length ? pokemon.types : ["unknown"];
 
   return (
     <div className="max-w-sm mx-auto p-4 border rounded-lg shadow-md bg-white">
-      <img
-        src={pokemon.sprites?.officialArtwork || ""}
-        alt={pokemon.name || "???"}
-        className="w-32 h-32 mx-auto"
-      />
-      <h1 className="text-xl font-bold text-center capitalize">
-        {pokemon.name || "???"}
-      </h1>
-      <div className="flex justify-center gap-2 mt-2">
-        {pokemon.types?.map((type, index) => {
-          const typeName = type || "unknown";
-          const typeImagePath = `/images/types/${typeName}.png`;
+      <form onSubmit={handleSubmit} className="mb-4">
+        <input
+          type="text"
+          placeholder="Enter Pokémon name"
+          value={input}
+          onChange={handleInputChange}
+          className="w-full p-2 border rounded-md"
+        />
+        <button
+          type="submit"
+          className="w-full mt-2 bg-blue-500 text-white p-2 rounded-md"
+        >
+          Search
+        </button>
+      </form>
 
-          return (
-            <span key={index} className="flex items-center gap-1">
+      {loading && (
+        <div className="text-center text-gray-500">Loading...</div>
+      )}
+
+      {!loading && error && (
+        <div className="text-center text-red-500">{error}</div>
+      )}
+
+      {!loading && pokemonName && (
+        <>
+          {pokemon ? (
+            <>
               <img
-                src={typeImagePath}
-                alt={typeName}
-                className="w-12 h-4 object-contain"
-                style={{ height: "75px", width: "75px" }}
+                src={pokemon.sprites?.officialArtwork || `/images/unknown_pokemon.png`}
+                alt={pokemon.name || "???"}
+                className="w-32 h-32 mx-auto"
               />
-            </span>
-          );
-        })}
-      </div>
+              <h1 className="text-xl font-bold text-center capitalize">
+                {pokemon.name || "???"}
+              </h1>
+              <div className="flex justify-center gap-2 mt-2">
+                {types.map((type, index) => {
+                  const typeImagePath = `/images/types/${type}.png`;
+
+                  return (
+                    <span key={index} className="flex items-center gap-1">
+                      <img
+                        src={typeImagePath}
+                        alt={type}
+                        className="w-12 h-4 object-contain"
+                      />
+                    </span>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <div className="text-center">
+              <img
+                src="/images/unknown_pokemon.png"
+                alt="unknown"
+                className="w-32 h-32 mx-auto"
+              />
+              <h1 className="text-xl font-bold text-center capitalize">???</h1>
+              <div className="flex justify-center gap-2 mt-2">
+                <img
+                  src="/images/types/unknown.png"
+                  alt="unknown"
+                  className="w-12 h-4 object-contain"
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
