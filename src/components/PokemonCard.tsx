@@ -29,8 +29,6 @@ const PokemonCard = () => {
     fetchPokemon();
   }, [pokemonName]);
 
-  console.log(pokemon)
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
@@ -38,31 +36,32 @@ const PokemonCard = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setPokemonName(input.trim().toLowerCase() || null);
+    setInput("");
   };
 
   const types = pokemon?.types?.length ? pokemon.types : ["unknown"];
 
   return (
-    <div className="max-w-sm mx-auto p-4 border rounded-lg shadow-md bg-white">
+    <div className="min-w-[450px] min-h-[450px] p-8 border-2 border-black rounded-xl bg-white">
       <form onSubmit={handleSubmit} className="mb-4">
-        <input
-          type="text"
-          placeholder="Enter Pokémon name"
-          value={input}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        />
-        <button
-          type="submit"
-          className="w-full mt-2 bg-blue-500 text-white p-2 rounded-md"
-        >
-          Search
-        </button>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Enter a Pokémon"
+            value={input}
+            onChange={handleInputChange}
+            className="w-full p-2 border rounded-md pr-12"
+          />
+          <button
+            type="submit"
+            className="absolute top-0 right-0 h-full px-4 bg-red-700 text-white rounded-r-md"
+          >
+            Go!
+          </button>
+        </div>
       </form>
 
-      {loading && (
-        <div className="text-center text-gray-500">Loading...</div>
-      )}
+      {loading && <div className="text-center text-gray-500">Loading...</div>}
 
       {!loading && error && (
         <div className="text-center text-red-500">{error}</div>
@@ -73,14 +72,17 @@ const PokemonCard = () => {
           {pokemon ? (
             <>
               <img
-                src={pokemon.sprites?.officialArtwork || `/images/unknown_pokemon.png`}
+                src={
+                  pokemon.sprites?.officialArtwork ||
+                  `/images/unknown_pokemon.png`
+                }
                 alt={pokemon.name || "???"}
-                className="w-32 h-32 mx-auto"
+                className="w-64 h-64 mx-auto"
               />
               <h1 className="text-xl font-bold text-center capitalize">
                 {pokemon.name || "???"}
               </h1>
-              <div className="flex justify-center gap-2 mt-2">
+              <div className="flex justify-center mt-2">
                 {types.map((type, index) => {
                   const typeImagePath = `/images/types/${type}.png`;
 
@@ -89,7 +91,7 @@ const PokemonCard = () => {
                       <img
                         src={typeImagePath}
                         alt={type}
-                        className="w-12 h-4 object-contain"
+                        className="w-24 h-8 object-contain"
                       />
                     </span>
                   );
@@ -101,7 +103,7 @@ const PokemonCard = () => {
               <img
                 src="/images/unknown_pokemon.png"
                 alt="unknown"
-                className="w-32 h-32 mx-auto"
+                className="w-64 h-64 mx-auto"
               />
               <h1 className="text-xl font-bold text-center capitalize">???</h1>
               <div className="flex justify-center gap-2 mt-2">

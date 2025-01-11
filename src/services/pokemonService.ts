@@ -29,7 +29,7 @@ export const getPokemonByName = async (
         : [],
     };
   } catch (error) {
-    console.error(`Error fetching Pokémon data for ${name}:`, error);
+    console.error(`Error getting data for ${name}:`, error);
     return null;
   }
 };
