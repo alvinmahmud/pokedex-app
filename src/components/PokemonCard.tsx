@@ -42,7 +42,7 @@ const PokemonCard = () => {
   const types = pokemon?.types?.length ? pokemon.types : ["unknown"];
 
   return (
-    <div className="min-w-[450px] min-h-[450px] p-8 border-2 border-black rounded-xl bg-white">
+    <div className="min-w-[450px] min-h-[450px] p-8 border-2 border-black rounded-xl bg-gray-300">
       <form onSubmit={handleSubmit} className="mb-4">
         <div className="relative">
           <input
@@ -110,7 +110,7 @@ const PokemonCard = () => {
                 <img
                   src="/images/types/unknown.png"
                   alt="unknown"
-                  className="w-12 h-4 object-contain"
+                  className="w-24 h-8 object-contain"
                 />
               </div>
             </div>
