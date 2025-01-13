@@ -35,14 +35,34 @@ const PokemonCard = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    setPokemonName(input.trim().toLowerCase() || null);
+    setPokemonName(input.trim().toLowerCase().replace(/\s+/g, "-") || null);
     setInput("");
   };
+
+  const formatPokemonName = (name: string) => {
+    const regions = {
+      "alola": "Alola",
+      "galar": "Galar",
+      "hisui": "Hisui",
+      "paldea": "Paldea",
+    };
+    
+    for (const region in regions) {
+      if (name.includes(`-${region}`)) {
+        [name] = name.split("-");
+        return `${name} (${regions[region as keyof typeof regions]})`;
+      }
+    }
+
+    return name
+  }
+
+  console.log(pokemon ? formatPokemonName(pokemon!.name) : 'None');
 
   const types = pokemon?.types?.length ? pokemon.types : ["unknown"];
 
   return (
-    <div className="min-w-[450px] min-h-[450px] p-8 border-2 border-black rounded-xl bg-gray-300">
+    <div className="min-w-[500px] min-h-[500px] p-8 border-2 border-black rounded-xl bg-gray-300">
       <form onSubmit={handleSubmit} className="mb-4">
         <div className="relative">
           <input
@@ -50,11 +70,11 @@ const PokemonCard = () => {
             placeholder="Enter a Pokémon"
             value={input}
             onChange={handleInputChange}
-            className="w-full p-2 border rounded-md pr-12"
+            className="w-full p-2 border rounded-md pr-12 font-pokemon"
           />
           <button
             type="submit"
-            className="absolute top-0 right-0 h-full px-4 bg-red-700 text-white rounded-r-md"
+            className="absolute top-0 right-0 h-full px-4 bg-red-700 text-white rounded-r-md font-pokemon"
           >
             Go!
           </button>
@@ -76,11 +96,11 @@ const PokemonCard = () => {
                   pokemon.sprites?.officialArtwork ||
                   `/images/unknown_pokemon.png`
                 }
-                alt={pokemon.name || "???"}
-                className="w-64 h-64 mx-auto"
+                alt={formatPokemonName(pokemon?.name) || "???"}
+                className="w-72 h-72 mx-auto"
               />
-              <h1 className="text-xl font-bold text-center capitalize">
-                {pokemon.name || "???"}
+              <h1 className="font-pokemon text-xl text-center capitalize">
+                {formatPokemonName(pokemon.name) || "???"}
               </h1>
               <div className="flex justify-center mt-2">
                 {types.map((type, index) => {
@@ -103,9 +123,9 @@ const PokemonCard = () => {
               <img
                 src="/images/unknown_pokemon.png"
                 alt="unknown"
-                className="w-64 h-64 mx-auto"
+                className="w-72 h-72 mx-auto"
               />
-              <h1 className="text-xl font-bold text-center capitalize">???</h1>
+              <h1 className="font-pokemon text-xl text-center">???</h1>
               <div className="flex justify-center gap-2 mt-2">
                 <img
                   src="/images/types/unknown.png"
