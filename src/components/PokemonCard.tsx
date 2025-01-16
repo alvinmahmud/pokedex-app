@@ -39,23 +39,73 @@ const PokemonCard = () => {
     setInput("");
   };
 
-  const formatPokemonName = (name: string) => {
-    const regions = {
-      "alola": "Alola",
-      "galar": "Galar",
-      "hisui": "Hisui",
-      "paldea": "Paldea",
+  const formatPokemonName = (name: string): string => {
+    const formMapping: { [key: string]: string } = {
+      mega: "Mega",
+      gmax: "(Gigantamax)",
+      primal: "(Primal)",
+      alola: "(Alola)",
+      galar: "(Galar)",
+      hisui: "(Hisui)",
+      paldea: "(Paldea)",
+      incarnate: "(Incarnate Forme)",
+      therian: "(Therian Forme)",
+      origin: "(Origin)",
+      crowned: "(Crowned)",
+      ash: "(Ash)",
+      zen: "(Zen Mode)",
+      dusk: "(Dusk Mane)",
+      dawn: "(Dawn Wings)",
+      complete: "(Complete)",
+      "10": "(10% Forme)",
+      "50": "(50% Forme)",
+      ice: "(Ice Rider)",
+      shadow: "(Shadow Rider)",
+      normal: "(Normal Forme)",
+      attack: "(Attack Forme)",
+      defense: "(Defense Forme)",
+      speed: "(Speed Forme)"
     };
+
+    const specialNames: Record<string, string> = {
+      "mr-mime": "Mr. Mime",
+      "mr-rime": "Mr. Rime",
+      "mime-jr": "Mime Jr.",
+      "type-null": "Type: Null",
+      "porygon-z": "Porygon-Z",
+      "ho-oh": "Ho-Oh",
+      "farfetchd": "Farfetch’d",
+      "sirfetchd": "Sirfetch’d",
+    };
+  
+    const parts = name.split("-");
+    const baseName = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+    const suffix = parts[1];
+  
+    // Mega Pokémon
+    if (suffix && suffix.startsWith("mega")) {
+      const nameParts = name.split("-");
+      [nameParts[0], nameParts[1]] = [nameParts[1], nameParts[0]];
     
-    for (const region in regions) {
-      if (name.includes(`-${region}`)) {
-        [name] = name.split("-");
-        return `${name} (${regions[region as keyof typeof regions]})`;
-      }
+      const capitalizedParts = nameParts.map((name) => 
+        name.charAt(0).toUpperCase() + name.slice(1)
+      );
+    
+      return capitalizedParts.join(" ");
+    }
+  
+    // Other forms
+    if (suffix && formMapping[suffix]) {
+      return `${baseName} ${formMapping[suffix]}`;
     }
 
-    return name
-  }
+    // Special cases
+    if (specialNames[name]) {
+      return specialNames[name]
+    }
+  
+    return name;
+  };
 
   console.log(pokemon ? formatPokemonName(pokemon!.name) : 'None');
 
