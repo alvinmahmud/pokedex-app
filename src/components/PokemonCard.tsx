@@ -104,7 +104,7 @@ const PokemonCard = () => {
       return specialNames[name]
     }
   
-    return name;
+    return name.replace("-", " ");
   };
 
   console.log(pokemon ? formatPokemonName(pokemon!.name) : 'None');
