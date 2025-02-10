@@ -64,7 +64,13 @@ const PokemonCard = () => {
       normal: "(Normal Forme)",
       attack: "(Attack Forme)",
       defense: "(Defense Forme)",
-      speed: "(Speed Forme)"
+      speed: "(Speed Forme)",
+      white: "(White)",
+      black: "(Black)",
+      gulping: "(Gulping)",
+      gorging: "(Gorging)",
+      roaming: "(Roaming)",
+      stellar: "(Stellar Forme)"
     };
 
     const specialNames: Record<string, string> = {
@@ -74,6 +80,9 @@ const PokemonCard = () => {
       "type-null": "Type: Null",
       "porygon-z": "Porygon-Z",
       "ho-oh": "Ho-Oh",
+      "jangmo-o": "Jangmo-O",
+      "hakamo-o": "Hakamo-O",
+      "kommo-o": "Kommo-O",
       "farfetchd": "Farfetch’d",
       "sirfetchd": "Sirfetch’d",
     };
