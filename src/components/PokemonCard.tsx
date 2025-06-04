@@ -70,7 +70,7 @@ const PokemonCard = () => {
       gulping: "(Gulping)",
       gorging: "(Gorging)",
       roaming: "(Roaming)",
-      stellar: "(Stellar Forme)"
+      stellar: "(Stellar Forme)",
     };
 
     const specialNames: Record<string, string> = {
@@ -83,26 +83,26 @@ const PokemonCard = () => {
       "jangmo-o": "Jangmo-O",
       "hakamo-o": "Hakamo-O",
       "kommo-o": "Kommo-O",
-      "farfetchd": "Farfetch’d",
-      "sirfetchd": "Sirfetch’d",
+      farfetchd: "Farfetch’d",
+      sirfetchd: "Sirfetch’d",
     };
-  
+
     const parts = name.split("-");
     const baseName = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
     const suffix = parts[1];
-  
+
     // Mega Pokémon
     if (suffix && suffix.startsWith("mega")) {
       const nameParts = name.split("-");
       [nameParts[0], nameParts[1]] = [nameParts[1], nameParts[0]];
-    
-      const capitalizedParts = nameParts.map((name) => 
-        name.charAt(0).toUpperCase() + name.slice(1)
+
+      const capitalizedParts = nameParts.map(
+        (name) => name.charAt(0).toUpperCase() + name.slice(1)
       );
-    
+
       return capitalizedParts.join(" ");
     }
-  
+
     // Other forms
     if (suffix && formMapping[suffix]) {
       return `${baseName} ${formMapping[suffix]}`;
@@ -110,13 +110,13 @@ const PokemonCard = () => {
 
     // Special cases
     if (specialNames[name]) {
-      return specialNames[name]
+      return specialNames[name];
     }
-  
+
     return name.replace("-", " ");
   };
 
-  console.log(pokemon ? formatPokemonName(pokemon!.name) : 'None');
+  console.log(pokemon ? formatPokemonName(pokemon!.name) : "None");
 
   const types = pokemon?.types?.length ? pokemon.types : ["unknown"];
 
@@ -153,7 +153,7 @@ const PokemonCard = () => {
               <img
                 src={
                   pokemon.sprites?.officialArtwork ||
-                  `/images/unknown_pokemon.png`
+                  `${import.meta.env.BASE_URL}images/unknown_pokemon.png`
                 }
                 alt={formatPokemonName(pokemon?.name) || "???"}
                 className="w-72 h-72 mx-auto"
@@ -163,7 +163,7 @@ const PokemonCard = () => {
               </h1>
               <div className="flex justify-center mt-2">
                 {types.map((type, index) => {
-                  const typeImagePath = `/images/types/${type}.png`;
+                  const typeImagePath = `${import.meta.env.BASE_URL}images/types/${type}.png`;
 
                   return (
                     <span key={index} className="flex items-center gap-1">
@@ -180,14 +180,14 @@ const PokemonCard = () => {
           ) : (
             <div className="text-center">
               <img
-                src="/images/unknown_pokemon.png"
+                src={`${import.meta.env.BASE_URL}images/unknown_pokemon.png`}
                 alt="unknown"
                 className="w-72 h-72 mx-auto"
               />
               <h1 className="font-pokemon text-xl text-center">???</h1>
               <div className="flex justify-center gap-2 mt-2">
                 <img
-                  src="/images/types/unknown.png"
+                  src={`${import.meta.env.BASE_URL}images/types/unknown.png`}
                   alt="unknown"
                   className="w-24 h-8 object-contain"
                 />
