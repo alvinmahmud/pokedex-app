@@ -1,21 +1,21 @@
-# 🧬 Pokédex App
+# Pokédex App
 
 A modern and sleek Pokedex built using **React**, **TypeScript**, and **Vite**. This app allows you to explore Pokémon, view their stats, and build your own custom team.
 
-## 🌟 Features
+## Features
 
-- 🐾 **Search Pokémon:** Quickly find details about your favorite Pokémon.
-- 📊 **View Stats:** Access detailed stats and abilities.
-- 🧰 **Team Builder:** Create and manage custom Pokémon teams.
+- **Search Pokémon:** Quickly find details about your favorite Pokémon.
+- **View Stats:** Access detailed stats and abilities.
+- **Team Builder:** Create and manage custom Pokémon teams.
 
-## 💻 Tech Stack
+## Tech Stack
 
 - **Frontend:** React, TypeScript
 - **Styling:** Tailwind CSS
 - **Backend API:** [PokéAPI](https://pokeapi.co/)
 - **Build Tool:** Vite
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 1. Clone the repository:
   ```bash
